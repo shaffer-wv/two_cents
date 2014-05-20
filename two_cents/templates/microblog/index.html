@@ -5,6 +5,15 @@
 	</head>
 
 	<body>
-		<h1>Hello</h1>
+		{% if posts %}
+			<ul>
+				{% for post in posts %}
+				<li>{{ post.author.get_full_name }}</li>
+				<li>{{ post.body }}</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<strong>There are no posts.</strong>
+		{% endif %}
 	</body>
 </html>

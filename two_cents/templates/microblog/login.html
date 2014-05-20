@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>Two Cents</head>
+
+	<body>
+		<h1>Login</h1>
+
+		<form id="login_form" method="post" action="/login/">
+			{% csrf_token %}
+			{{ login_form.as_p }}
+
+			<input type="submit" name="submit" value="Login" />
+		</form>
+		
+		<p>If you do not have an account, you can <a href="{% url 'register' %}">register here</a></p>
+	</body>
+</html>
