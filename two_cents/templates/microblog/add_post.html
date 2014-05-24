@@ -1,0 +1,24 @@
+
+<!DOCTYPE hmtl>
+<html>
+	<head>
+		<title>Two Cents</title>
+	</head>
+
+	<body>
+		<form class="form-post span8" id="post_form" method="post" action="/add_post/">
+			<h2 class="form-post-heading">Create new Post</h2>
+			{% csrf_token %}
+
+			{% for field in form.visible_fields %}
+			{{ field.errors }}
+			{{ field.help_text }}<br />
+			{{ field }}<br />
+			{% endfor %}
+
+			
+			<input class="btn btn-primary" type="submit" name="submit" value="Post"/>
+			<a href="/index/" class="btn btn-default">Cancel</a>
+		</form>
+	</body>
+</html>

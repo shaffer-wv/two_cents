@@ -15,5 +15,12 @@
 		{% else %}
 			<strong>There are no posts.</strong>
 		{% endif %}
+		<hr>
+		<div>
+			<a href="{% url 'add_post' %} ">New Post</a> | 
+			<a href="{% url 'user_profile' user.username %}">MyProfile</a> | 
+			<a href="{% url 'user_logout' %} ">Logout</a>
+		</div>
+		
 	</body>
 </html>
