@@ -1,0 +1,94 @@
+
+/* navbar */
+.navbar-twocents {
+	background: #2E9AFE;
+}
+
+.navbar-twocents .nav li a {
+	color: #fff;
+}
+
+.navbar-twocents .navbar-brand {
+	color: #fff;
+	text-transform: uppercase;
+	padding-left: 50px;
+}
+
+/* body */
+body { 
+	padding-top: 70px;
+}
+
+.well .list-group .list-group-item:hover {
+	color: #2E9AFE;
+}
+
+.stream ul li {
+	border: 1px solid grey;
+	padding: 10px;
+}
+
+.stream p {
+	border: 1px solid #eee;
+	padding: 10px;
+	margin-bottom: 1px;
+}
+
+.stream-items {
+	list-style: none;
+}
+
+
+/* login */
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin .btn-primary {
+	background-color: #2E9AFE;
+}
+
+/* register */
+.panel-register {
+	text-align: center;
+}
+
+.signup-heading {
+	text-align: center
+}
+
+.container .login p {
+  float: right;
+}
