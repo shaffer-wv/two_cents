@@ -4,9 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 from microblog.models import Post
 from microblog.forms import UserForm, LoginForm, PostForm
-import utilities
+
 
 # user authentication views
 
@@ -161,6 +162,20 @@ def search(request):
 		context)
 
 @login_required
+def user_search(request):
+	context = RequestContext(request)
+
+	result_list = []
+
+	if request.method == 'POST':
+		query = request.POST['query'].strip()
+
+		if query:
+			result_list = find_user_by_name(query)
+
+	return render_to_response('microblog/user_search.html', { 'result_list': result_list }, context)
+
+@login_required
 def followers(request):
 	context = RequestContext(request)
 
@@ -183,3 +198,12 @@ def following(request):
 	following_list = following_list[1:]
 
 	return render_to_response('microblog/following.html', { 'following_list': following_list }, context)
+
+
+###### Utilities #####
+# user search
+def find_user_by_name(query_name):
+	qs = User.objects.all()
+	for term in query_name.split():
+		qs = qs.filter( Q(first_name__icontains = term) | Q(last_name__icontains = term))
+	return qs

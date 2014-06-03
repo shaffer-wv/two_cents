@@ -7,7 +7,7 @@
 		<div class="col-md-6 col-md-offset-1">
 			{% if posts %}
 				{% for post in posts %}
-					<p><strong>{{ post.author.get_full_name }}</strong> @{{ post.author.username }} - {{ post.pub_date|timesince }}<br>{{ post.body }}</p>
+					<p><strong>{{ post.author.get_full_name }}</strong> @{{ post.author.username }} - <em>{{ post.pub_date|timesince }}</em><br>{{ post.body }}</p>
 				{% endfor %}
 			{% else %}
 				<p>There are no posts to display.</p>
