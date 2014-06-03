@@ -13,7 +13,11 @@
 				<h2>{{target_user.get_full_name }}</h2>
 				<h4>{{ target_user.username }}</h4>
 				<p>Email: {{ target_user.email }}</p>
-				<a href="#" class="btn btn-basecamp">Edit Profile</a>
+				{% if own_profile == True %}
+					<a href="#" class="btn btn-primary">Edit Profile</a>
+				{% else %}
+					<a href="{% url 'follow' target_user.username %}" class="btn btn-primary">Follow</a>
+				{% endif %}
 			</div>
 		</div><!-- /col-md-6 -->
 		<div class="col-md-3">
@@ -31,16 +35,13 @@
 <div class="container-fluid stream">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
-			<p><strong>John Doe</strong> @jdoe - 1h<br>
-			This will be a sample microblog post. 
-			It is boring now but hopefully I can come up with something 
-			better later. It's getting tough to come up
-			with fake content for posts.</p>
-			<p><strong>John Doe</strong> @jdoe - 1h<br>
-			This will be a sample microblog post. 
-			It is boring now but hopefully I can come up with something 
-			better later. It's getting tough to come up
-			with fake content for posts.</p>
+			{% if posts %}
+				{% for post in posts %}
+					<p><strong>{{ post.author.get_full_name }}</strong> @{{ post.author.username }} - {{ post.pub_date|timesince }}<br>{{ post.body }}</p>
+				{% endfor %}
+			{% else %}
+				<p>There are no posts to display.</p>
+			{% endif %}
 		</div><!-- col-md-6 -->				
 	</div><!-- /row -->
 </div><!-- /container stream -->

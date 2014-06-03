@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from microblog.models import Post
 from microblog.forms import UserForm, LoginForm, PostForm
+import utilities
 
 # user authentication views
 
@@ -50,9 +51,6 @@ def user_login(request):
 					return HttpResponseRedirect('/')
 				else:
 					return HttpResponse("Your account is disabled.")
-			else:
-				print "Invalid login details: {0}, {1}".format(username, password)
-				return HttpResponse("Invalid login details supplied.")
 	else:
 		form = LoginForm()
 	return render_to_response('microblog/login.html', {'login_form': form,}, context)
@@ -69,8 +67,22 @@ def user_logout(request):
 def index(request):
 	context = RequestContext(request)
 
+	current_user = request.user
 
-	posts = Post.objects.all()
+	# get users that logged in user is following
+	following = current_user.userprofile.follows.all()
+
+	# get the posts from following users
+	posts = []
+	for person in following:
+		x = Post.objects.filter(author = person.user)
+		for post in x:
+			posts.append(post)
+
+	# sort the post in order of pub_date
+	posts = sorted(posts, key=lambda post: post.pub_date, reverse=True)
+
+
 	context_dict = {'posts': posts}
 
 	return render_to_response('microblog/index.html', context_dict, context)
@@ -104,6 +116,46 @@ def user_profile(request, username):
 	else:
 		own_profile = False
 
-	return render_to_response('microblog/profile.html', {'target_user': target_user, 'own_profile': own_profile,}, context)
+	posts = Post.objects.filter(author=target_user)
+
+	context_dict = {'target_user': target_user}
+	context_dict['own_profile'] = own_profile
+	context_dict['posts'] = posts
 
 
+	return render_to_response('microblog/profile.html', context_dict, context)
+
+@login_required
+def follow(request, username):
+	user_to_follow = User.objects.get(username=username)
+
+	# not sure if I need these first 2 if statements
+	if user_to_follow == None:
+		# User not found
+		# Eventually need to enable messages
+		return HttpResponseRedirect('/')
+
+	if user_to_follow == request.user:
+		# Already following yourself
+		return HttpResponseRedirect('/')
+
+	user = request.user
+	user.userprofile.follows.add(user_to_follow.userprofile)
+	user.save()
+
+	return HttpResponseRedirect('/')
+
+@login_required
+def search(request):
+	context = RequestContext(request)
+	query_string = ''
+	found_entries = None
+	if ('q' in request.GET) and request.GET['q'].strip():
+		query_string = request.GET['q']
+
+		entry_query = get_query(query_string, ['body'])
+
+		found_entries = Entry.objects.filter(entry_query).order_by('-pub_date')
+
+	return render_to_response('search/search_results.html', { 'query_string': query_string, 'found_entries': found_entries },
+		context)

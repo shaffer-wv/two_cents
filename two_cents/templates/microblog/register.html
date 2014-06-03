@@ -21,16 +21,21 @@
 			</div><!-- /col-md-6 -->
 		</div><!-- /row -->
 		<div class="row">
+			{% if registered %}
+			<p class="text-center">Thank you for registering. <a href="{% url 'user_login' %}">Log In</a> to get started.</p>
+			{% else %}
 			<form class="form-signin" role="form" id="user_form" method="post" action="/register/">
 				{% csrf_token %}
 
 				<h2 class="form-signin-heading signup-heading">Please Sign Up</h2>
-				First Name: <input type="text" class="form-control" placeholder="First Name" required autofocus /><br>
-				Last Name: <input type="text" class="form-control" placeholder="Last Name" required /><br>
-				Username: <input type="text" class="form-control" placeholder="Username" name="username" size="50" required /><br>
-				Password: <input type="password" class="form-control" placeholder="Password" required /><br>
+				First Name: <input type="text" class="form-control" name="first_name" autofocus /><br>
+				Last Name: <input type="text" class="form-control" name="last_name" /><br>
+				Username: <input type="text" class="form-control"  name="username" size="50" /><br>
+				Password: <input type="password" class="form-control" name="password" /><br>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
 			</form>
+			<p class="text-center">Already a member. Then <a href="{% url 'user_login' %}">log in</a> here.</p>
+			{% endif %}
 		</div><!-- /row -->
 	</div><!-- /jumbotron -->
 </div> <!-- /container -->
