@@ -9,4 +9,6 @@ urlpatterns = patterns('',
 	url(r'^add_post/$', views.add_post, name='add_post'),
 	url(r'^profile/(?P<username>\w+)$', views.user_profile, name='user_profile'),
 	url(r'^follow/(?P<username>\w+)$', views.follow, name='follow'),
+	url(r'^followers/$', views.followers, name='followers'),
+	url(r'^following/$', views.following, name='following'),
 	)

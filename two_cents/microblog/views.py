@@ -159,3 +159,27 @@ def search(request):
 
 	return render_to_response('search/search_results.html', { 'query_string': query_string, 'found_entries': found_entries },
 		context)
+
+@login_required
+def followers(request):
+	context = RequestContext(request)
+
+	user = request.user
+
+	followers_list = user.userprofile.followed_by.all()
+	# dont want to display own profile in followers list
+	followers_list = followers_list[1:]
+
+	return render_to_response('microblog/followers.html', { 'followers_list': followers_list }, context)
+
+@login_required
+def following(request):
+	context = RequestContext(request)
+
+	user = request.user
+
+	following_list = user.userprofile.follows.all()
+	# dont want to display own profile in followers list
+	following_list = following_list[1:]
+
+	return render_to_response('microblog/following.html', { 'following_list': following_list }, context)
