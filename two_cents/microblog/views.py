@@ -63,7 +63,6 @@ def user_logout(request):
 
 	return HttpResponseRedirect('/login/')
 
-
 @login_required
 def index(request):
 	context = RequestContext(request)
